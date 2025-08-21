@@ -1,0 +1,58 @@
+
+Event: RootME
+Date: 18-08-2025 to 22-08-2025
+Platform: TryHackMe
+Ip Address: -10.11.190.11
+
+Description: -
+A ctf for beginners, can you root me?
+It is divided into three tasks so I would start from Task 02 as Task 01 is based on openvpn (Basic stuff)
+
+Report: -
+
+Part A: Reconnaissance
+
+In the first task was to find number of ports, version of system and what is running on the port. So a basic nmap scan is all that was needed to find the requires information
+of the a bove question. So the nmap command "nmap -sC -sV MachineIP" which gave me all the neccessary requirements. Then the following question requires to find the 
+hidden directory and all the directory which was done by the command "gobbuster dir -u http://MachineIP/ -w /usr/share/seclists/Discovery/Web-Content/common.txt" which gave me 
+two important directories /panel and /uploads
+
+Note: - The CTF Version is glitched it said 2.4.41 while the real answer was 2.4.29 which maybe because the CTF too old or human error.
+
+Part B: - Getting a shell
+
+I tried both the directory /panel and /uploads in which /panel gave me a option to upload a file which can be missused to gain a reverse shell. So i first decided to go with 
+p0wny.php which failed because no php extension excepted so after some help from community i learnt i cna use either phtml or php5 extension so i went phtml extension. I
+ went to /uploads to access the file and clicked on it. Which worked and I got the shell.
+
+Part C: - Privilege escalation
+
+I got the user flag on /home directory but for some reason after a many troobleshoot I couldnt gain access to the root. In the p0wny.php5 i learnt that 
+python had the SUID permision which i can esclate to gain privilagess of root but was not working in p0wny.php. After doing some help with my team members i decided to use 
+netcat to gain a reverse shell so i found the php file online in pentest monkey which with some changes in the file did the same process as p0wny.php5 to gain access.
+I used "nc -lnvp 443" on my terminal and with help of "http://machineip/uploads/reverse-shell-php.php5".I gained the reverse shell in my terminal and after that 
+i used the command "bash -i" to gain the bash shell on terminal then i used the SUID command for python "python -c 'import os; os.execl("/bin/sh", "sh", "-p")'" to gain the
+root which worked and i gained the root so i went to read /root/root.txt which gave me the FINAL FLAG.
+
+Note: - The changes made in revers-shell-php.php5 was just changing the ip address to my ip address and port number to my listening port. The python command was taken in 
+from the GTFOBins python SUID.
+
+Command used: -
+
+Nmap: - "nmap -sC -sV MachineIP"
+
+Gobuster: -  "gobbuster dir -u http://MachineIP/ -w /usr/share/seclists/Discovery/Web-Content/common.txt"
+
+NetCat: - "nc -lnvp PortNumber"
+
+Python(Root): - "python -c 'import os; os.execl("/bin/sh")'"
+
+Flags FOUND: -
+
+Flag 01: - THM{y0u_g0t_a_shell}
+
+Flag 02: - THM{priv1l3g3_Esc4l4t10n}
+
+Note: - Flags have been altered to avoid cheating so please dont cheat
+
+Note: - I am a newbie tring to learn CTF Report so any problems please let me know
