@@ -1,1 +1,54 @@
+Event: SimpleCTF
+Date: 21-08-2025 to 22-08-2025
+Platform: TryHackMe
+Ip Address: - 10.201.125.64
 
+Description: -
+A ctf for beginners to understand how CTF works. This CTF consist of 10 Question which will be divided into 3 Parts
+
+Report: -
+
+Part 01: - Finding the vulnerability
+
+The first question was to scan the file to know number of ports and where to to the vulnerablity. The first nmap scan was done to know number of ports and what protocol
+is used on those port. The ports used are 22, 80 and 2222 which had ftp, http and ssh on these port. So i went to website of the ip address "http://MachineIP/" and which was
+not helpful to find anything. So the gobuster were used to enumerate directories which gave me /simple/ dir so i went to the website "http://MachineIP/simple/" which showcased
+a big website. So used the hint option to find a hint which told me a SQL-Vulnerablity was there but i couldnt use it with the help on application sqlmap. I tried enumeration 
+of /simple/ directory just to find an /admin/ directory which was also used in sqlmap which also failed. So i did some more investigation on webite at /simple/ directory
+and then i found it used old version named "CMS Made Simple 2.2.8" which with some research on google gave me a the vulnerablity name "CVE-2019-9053"
+
+Part 02: - Gaining a shell
+
+After some research on exploit database i found the exploit for "CVE-2019-9053" which was a python code but for some reason it wasnt working so after some research i found a 
+github repos which had the same exploit but used and working version. So after using "python exploit.py" which gave me the command to use to find the password and username.
+The command used was "python exploit.py -u http://MachineIP/simple/ --crack -w /usr/share/wordlist/rockyou.txt" which after many tries gave me the password "******". After
+using ssh with command "ssh -p 2222 username@MachineIP" with the help password gave me a shell.
+
+Part 03: - Privlage Escalation.
+
+After gainig the shell i got the user flag with cat of user.txt. After that using cd.. I found other user at /home directory "sunbarn" which solved the 7th question.
+After trying both SUID and crontabs i did not found any issues. So i tried sudo with sudo -l which gave me the dir "vim" can be exploited with the help of GTFOBins.
+The command "sudo vim -c ':!/bin/sh" i got the root shell with help of whoami. After command "cat /root/root.txt" which gave me the final flag.
+
+TOOLS AND COMMMANDS; -
+
+nmap: - nmap -sS -sV MachineIP
+
+gobuster: - gobuster dir -u http://MachineIP/ -w /usr/share/seclist/Discovery/Web-Content/common.txt
+            gobuster dir -u http://MachineIP/simple/ -w /usr/share/seclist/Discovery/Web-Content/common.txt
+
+python: -  python exploit.py -u http://MachineIP/ --crack -w /usr/share/Wordlist/rockyou.txt
+
+ssh: - ssh -p 2222 usename@MachineIP
+
+sudo: - sudo -l
+        sudo vim -c ':!/bin/sh
+
+FLAGS: -
+
+user: - Good job, keep up!
+
+root: - Well done. You made it!
+
+Note: - The flag is altered to avoid any cheating so please dont cheat.
+                                                                             THE END
