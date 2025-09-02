@@ -1,1 +1,96 @@
+Event: SimpleCTF
+Date: 30-08-2025 to 02-09-2025
+Platform: TryHackMe
+Ip Address: - None
 
+Description: -
+This is a decryption challenge which is mostly based on decrypting given question so each question would be answer one by one.
+
+Report: -
+
+TASK 01
+
+The question 01: - c4n y0u c4p7u23 7h3 f149?
+answer: - can you capture the flag (It was an easy decrypt from naked eye)
+
+The question 02: - "01101100 01100101 01110100 01110011 00100000 01110100 01110010 01111001 00100000 01110011
+01101111 01101101 01100101 00100000 01100010 01101001 01101110 01100001 01110010 01111001 00100000 01101111 01110101
+01110100 00100001" ?
+Ans: -lets try some binary out! (This was a binary therefore used binary decoding)
+
+The question 03: - MJQXGZJTGIQGS4ZAON2XAZLSEBRW63LNN5XCA2LOEBBVIRRHOM====== ?
+Ans: -base32 is super common in CTF's (This is Base32 therefore Base32 decoding)
+
+The question 04: - RWFjaCBCYXNlNjQgZGlnaXQgcmVwcmVzZW50cyBleGFjdGx5IDYgYml0cyBvZiBkYXRhLg== ?
+Ans: -Each Base64 digit represents exactly 6 bits of data. (This is Base64 therefore Base64 encoding)
+
+The question 05: - 68 65 78 61 64 65 63 69 6d 61 6c 20 6f 72 20 62 61 73 65 31 36 3f ?
+Ans: -hexadecimal or base16? (This is a hex so hex encoding was done)
+
+The question 07: - Ebgngr zr 13 cynprf! ?
+Ans: - Rotate me 13 places! (This was a ceaser cipher on shift 13 therefore (ROT13) was used to encode)
+
+The question 08: - *@F DA:? >6 C:89E C@F?5 323J C:89E C@F?5 Wcf E:>6DX ?
+Ans: -You spin me right round baby right round (47 times) (This is also ceaser cipher on shift 47 therefore (ROT47) was used)
+
+The question 09: - - . .-.. . -.-. --- -- -- ..- -. .. -.-. .- - .. --- -. . -. -.-. --- -.. .. -. --. ?
+Ans: -telecommunication encoding (This is a morse code so morse code encoding is done)
+
+The question 10: - 85 110 112 97 99 107 32 116 104 105 115 32 66 67 68
+Ans: - Unpack this BCD (This is a decimal so decimal encoding was done)
+
+The question 11: - (Note this is not the full question as the full question is very long)
+LS0tLS0gLi0tLS0gLi0tLS0gLS0tLS0gLS0tLS0gLi0tLS0gLi0tLS0gLS0tLS0KLS0tLS0gLi0tLS0gLi0tLS0gLS0tLS0gLS0tLS0gLi0tLS0gLS0tLS0gLi0
+tLS0KLS0tLS0gLS0tLS0gLi0tLS0gLS0tLS0gLS0tLS0gLS0tLS0g ?
+Ans:- Let's Make This A Bit Trickier... (Not the correct flag)
+
+Base64 = Morse Code = Binary = ROT47 = Decimal = Answer
+
+(This is a base64 after doing base 64 i got morse code which i after encoding morse code which 
+gave me binary which i did encode binary then i got ROT47 then after ROT47 encoding 
+i got Decimal then after that i did a Decimal encoding it gave me the answer.)
+
+Task 02: -
+
+Download the file 
+Ans : - super secret message
+(For spectrography its a hidden message in the recording. I used 
+Audio-Analyzer to know the answer)
+
+Task 03: -
+
+Decode the image to reveal the answer.
+Ans: -spaghettisteg
+(For Steganography i used the website Stegnographic Decoder to find the answer.)
+
+Task 04: -
+
+Question 01: - Download and get 'inside' the file. What is the first filename & extension?
+Ans: - hackerchat.png
+
+Question 02: - Get inside the archive and inspect the file carefully. Find the hidden text.
+Ans: - AHH_YOU_FOUND_ME!
+
+(Both the task can be done simultaneously with just downloading the image and command cat <filename> where filename 
+is name of image file and at the "last 2nd line" is the first answer and second answer at just above first at the bottom section
+of the gibberish just need to read it properly. Please dont read the whole gibersih from start the andwer is just at
+bottom not in middile or top whereas in bottom.)
+
+Tools Used: -
+
+ChatGPT: - An AI tool was used to only know the type of encoding is it because i am not that proffesional yet
+
+Cyber Chef (https://gchq.github.io/CyberChef): - This is a website where all the decoding is done for Task 01 
+
+Audio-Analyzer (https://academo.org/demos/spectrum-analyzer/): - Used for spectography
+
+Stegnographic Decoder (https://futureboy.us/stegano/decinput.html) : - Used for stegnographic
+
+Command used: -
+
+cat <filename> for task 04
+
+Note: - Some flags are altered to avoid cheating please dont cheat.
+
+
+                                                        END OF THE REPORT
