@@ -5,8 +5,8 @@ This repository contains my write-ups, solutions, and notes for Capture The Flag
 It is intended for educational purposes and to document my learning process in cybersecurity.
 
 ## Structure
-- **/writeups** – Detailed solutions for each challenge.
-- **/resources** – References, cheatsheets, and helpful links.
+- /TryHackMe: - For Tryhackme challenges reports
+- /HackTheBox: - For Hackthebox challenges reports
 
 ## Disclaimer
 All content here is for educational purposes only.  
