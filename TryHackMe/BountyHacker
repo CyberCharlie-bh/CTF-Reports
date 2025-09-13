@@ -1,1 +1,48 @@
+CTF Name: - BountyHacker
 
+Category: - Red Team
+Difficulty: - Easy
+Website: - TryHackMe
+
+Description: -
+You were boasting on and on about your elite hacker skills in the bar and a few Bounty Hunters decided they'd take you up on claims! 
+Prove your status is more than just a few glasses at the bar. I sense bell peppers & beef in your future! 
+
+Machine IP: - 10.10.90.142
+
+Part 01: - Gaining Machine Access
+A first nmap scan was done to know the ports and services. After the scan three services were found ftp, http and ssh. First http 
+was checked it had nothing of use after spending some time on it. I decided to check the ftp it showcases that it had anoyomous login
+so it worked i put in the username and password as anoyomous and i got the login. It had two file first being tasks.txt and locks.txt.
+So i used command get tasks.txt and get locks.txt to get the file which works and i got both file. From first file o got username 
+"Lin" and using hydra i brute forced password of ssh as locks.txt as a wordlist. So after bruteforcing i got the password which was
+"RedDr4gonSyndlcat3" (I changed the password to avoid cheating). Using ssh i got the shell with username and oassword.
+
+Part 02: - Privilage Escalation
+After i got the shell i did "ls" command which gave me user.txt flag. Then i tried sudo -l which gave me option of root by 
+using /bin/tar. Then i used SUID commands to find the privilages i can esclate it still had that /bin/tar in it so i decided to
+go to GTFO Bin to find a way to escalate the root so i used first the SUID Command in GTFO Bins and i got a shell but i wasnt root
+it was of username "lin" so i decided to try thr SUDO command from GTFO Bins which i worked i got the root. I got the root.txt at
+/root directory which gave me the last flag.
+
+Commands: -
+
+Nmap: - nmap -sV -sC MachineIP -oN firstnamp.txt
+
+FTP: - Get Locks.txt/Tasks.txt
+
+Hydra: - hydra -u lin -w locks.txt -t 4 ssh
+
+ROOT: - GTFO BINS
+
+SUID: - ./tar -cf /dev/null /dev/null --checkpoint=1 --checkpoint-action=exec=/bin/sh
+
+SUDO: - sudo tar -cf /dev/null /dev/null --checkpoint=1 --checkpoint-action=exec=/bin/sh
+
+FLAG: -
+
+user.txt: - THM{CR1M3_Synd1C4T3}
+
+root.txt: - THM{80UN7Y_H4cK3r}
+
+Note: - Flags have been altered to avoid cheating
